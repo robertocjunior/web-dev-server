@@ -1,7 +1,6 @@
 services:
   web-terminal:
-    build: .
-    image: web-terminal-debian
+    image: ghcr.io/robertocjunior/web-dev-server:main
     container_name: web-terminal
     ports:
       - "7681:7681"
