@@ -19,5 +19,9 @@ if [ -n "$GITHUB_REPO" ]; then
     fi
 fi
 
+# Configura persistência do histórico do terminal se o volume for montado em /opt/dev
+export HISTFILE=/opt/dev/.bash_history
+touch "$HISTFILE"
+
 # Inicia o ttyd com os parâmetros solicitados
 exec /usr/local/bin/ttyd -W -o bash

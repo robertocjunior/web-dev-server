@@ -9,8 +9,9 @@ Este projeto fornece um container Docker baseado no Debian Stable com o `ttyd` i
 - **Ferramentas Inclusas:**
     - Node.js 20 & npm (latest)
     - Google Gemini CLI
-    - Git, curl, htop, sudo
+    - Git, curl, htop, sudo, openssh-client
 - **Automação:** Clonagem automática de repositório Git no início.
+- **Persistência:** Histórico de comandos e arquivos salvos em volume local.
 - **Acesso:** Loga automaticamente como `root`.
 
 ## Pré-requisitos

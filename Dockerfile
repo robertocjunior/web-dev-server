@@ -11,6 +11,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     htop \
     sudo \
     git \
+    openssh-client \
     && rm -rf /var/lib/apt/lists/*
 
 # 2. Configurar repositório NodeSource para Node.js 20
