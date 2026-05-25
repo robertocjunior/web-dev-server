@@ -1,9 +1,13 @@
 services:
   web-terminal:
+    build: .
     image: ghcr.io/robertocjunior/web-dev-server:main
     container_name: web-terminal
     ports:
       - "7681:7681"
+    environment:
+      - GIT_USER_NAME=roberto
+      - GIT_USER_EMAIL=robertocasalijunior@gmail.com
     restart: unless-stopped
     # Privileged pode ser necessário para algumas operações de root dentro do container
     privileged: false 
