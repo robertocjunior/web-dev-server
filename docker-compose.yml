@@ -1,0 +1,10 @@
+services:
+  web-terminal:
+    build: .
+    image: web-terminal-debian
+    container_name: web-terminal
+    ports:
+      - "7681:7681"
+    restart: unless-stopped
+    # Privileged pode ser necessário para algumas operações de root dentro do container
+    privileged: false 
