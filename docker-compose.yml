@@ -8,6 +8,7 @@ services:
     environment:
       - GIT_USER_NAME=roberto
       - GIT_USER_EMAIL=robertocasalijunior@gmail.com
+      - GITHUB_REPO= # Cole o link do repositório aqui (ex: https://github.com/user/repo.git)
     restart: unless-stopped
     # Privileged pode ser necessário para algumas operações de root dentro do container
     privileged: false 
