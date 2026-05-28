@@ -1,5 +1,9 @@
 #!/bin/sh
 
+# Tenta atualizar o gemini-cli no início
+echo "Verificando atualizações para @google/gemini-cli..."
+npm install -g @google/gemini-cli@latest --no-audit --no-fund || echo "Aviso: Não foi possível atualizar o gemini-cli (verifique a conexão)."
+
 # Configura o Git com base nas variáveis de ambiente, se fornecidas
 if [ -n "$GIT_USER_NAME" ]; then
     git config --global user.name "$GIT_USER_NAME"
