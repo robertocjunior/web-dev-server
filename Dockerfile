@@ -26,25 +26,29 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && npm install -g @google/gemini-cli \
     && rm -rf /var/lib/apt/lists/*
 
-# 4. Baixar e instalar o ttyd (versão 1.7.3)
+# 4. Baixar e instalar o VS Code CLI
 RUN ARCH=$(uname -m) && \
-    if [ "$ARCH" = "x86_64" ]; then TTYD_ARCH="x86_64"; \
-    elif [ "$ARCH" = "aarch64" ]; then TTYD_ARCH="aarch64"; \
-    else TTYD_ARCH="x86_64"; fi && \
-    curl -LO https://github.com/tsl0922/ttyd/releases/download/1.7.3/ttyd.${TTYD_ARCH} && \
-    chmod +x ttyd.${TTYD_ARCH} && \
-    mv ttyd.${TTYD_ARCH} /usr/local/bin/ttyd
+    if [ "$ARCH" = "x86_64" ]; then VSCODE_ARCH="x64"; \
+    elif [ "$ARCH" = "aarch64" ]; then VSCODE_ARCH="arm64"; \
+    else VSCODE_ARCH="x64"; fi && \
+    curl -Lk "https://code.visualstudio.com/sha/download?build=stable&os=cli-linux-${VSCODE_ARCH}" --output vscode_cli.tar.gz && \
+    tar -xf vscode_cli.tar.gz && \
+    mv code /usr/local/bin && \
+    rm vscode_cli.tar.gz
 
 # 5. Configurações: diretório de trabalho e atalho 'dev'
 RUN mkdir -p /opt/dev && \
     echo '#!/bin/sh\ncd /opt/dev && gemini' > /usr/bin/dev && \
     chmod +x /usr/bin/dev
 
+WORKDIR /opt/dev
+
 # Script de entrada para configurar o git via variáveis de ambiente
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
-# Expor a porta padrão do ttyd
-EXPOSE 7681
+# VS Code Tunnels não requerem portas específicas abertas, 
+# mas mantemos flexibilidade se necessário.
+EXPOSE 8000
 
 ENTRYPOINT ["/entrypoint.sh"]

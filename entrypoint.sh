@@ -27,5 +27,14 @@ fi
 export HISTFILE=/opt/dev/.bash_history
 touch "$HISTFILE"
 
-# Inicia o ttyd com os parâmetros solicitados
-exec /usr/local/bin/ttyd -W -o bash
+# Define o HOME como /opt/dev para que o VS Code e outras ferramentas usem este diretório como base
+export HOME=/opt/dev
+
+# Inicia o VS Code Tunnel
+# Se TUNNEL_NAME não for definido, o VS Code gerará um nome aleatório.
+echo "Iniciando VS Code Tunnel..."
+if [ -n "$TUNNEL_NAME" ]; then
+    exec /usr/local/bin/code tunnel --accept-server-license-terms --name "$TUNNEL_NAME" --user-data-dir /opt/dev/.vscode-server
+else
+    exec /usr/local/bin/code tunnel --accept-server-license-terms --user-data-dir /opt/dev/.vscode-server
+fi

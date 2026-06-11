@@ -1,14 +1,13 @@
 services:
-  web-terminal:
+  vscode-server:
     build: .
-    image: ghcr.io/robertocjunior/web-dev-server:main
-    container_name: web-terminal
-    ports:
-      - "7681:7681"
+    image: ghcr.io/robertocjunior/vscode-server:main
+    container_name: vscode-server
     environment:
       - GIT_USER_NAME=roberto
       - GIT_USER_EMAIL=robertocasalijunior@gmail.com
       - GITHUB_REPO= # Cole o link do repositório aqui (ex: https://github.com/user/repo.git)
+      - TUNNEL_NAME=my-vscode-server # Nome opcional para o seu túnel
     volumes:
       - ./workdir:/opt/dev
     restart: unless-stopped
