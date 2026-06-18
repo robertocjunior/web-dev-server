@@ -3,7 +3,7 @@ FROM debian:stable-slim
 # Evitar prompts interativos durante o build
 ENV DEBIAN_FRONTEND=noninteractive
 # Adiciona o diretório padrão do Antigravity direto no PATH do sistema
-ENV PATH="/root/.antigravity/bin:${PATH}"
+ENV PATH="/root/.local/bin:${PATH}"
 
 # 1. Instalar dependências básicas e ferramentas iniciais
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -26,8 +26,7 @@ RUN mkdir -p /etc/apt/keyrings \
 RUN apt-get update && apt-get install -y --no-install-recommends \
     nodejs \
     && npm install -g npm@latest \
-    && mkdir -p /root/.antigravity/bin \
-    && curl -fsSL https://antigravity.google/cli/install.sh | bash -s -- -y \
+    && curl -fsSL https://antigravity.google/cli/install.sh | bash \
     && rm -rf /var/lib/apt/lists/*
 
 # 4. Baixar e instalar o ttyd (versão 1.7.3)
@@ -41,7 +40,7 @@ RUN ARCH=$(uname -m) && \
 
 # 5. Configurações: diretório de trabalho e atalho 'dev'
 RUN mkdir -p /opt/dev && \
-    echo '#!/bin/sh\ncd /opt/dev && antigravity' > /usr/bin/dev && \
+    echo '#!/bin/sh\ncd /opt/dev && agy' > /usr/bin/dev && \
     chmod +x /usr/bin/dev
 
 # Script de entrada para configurar o git via variáveis de ambiente
