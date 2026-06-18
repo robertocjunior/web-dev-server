@@ -16,14 +16,15 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 # 2. Configurar repositório NodeSource para Node.js 20
 RUN mkdir -p /etc/apt/keyrings \
-    && curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg \
+    && curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | \
+    gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg \
     && echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_20.x nodistro main" > /etc/apt/sources.list.d/nodesource.list
 
-# 3. Instalar Node.js e ferramentas globais
+# 3. Instalar Node.js e Antigravity CLI
 RUN apt-get update && apt-get install -y --no-install-recommends \
     nodejs \
     && npm install -g npm@latest \
-    && npm install -g @google/gemini-cli \
+    && curl -fsSL https://antigravity.google/cli/install.sh | bash \
     && rm -rf /var/lib/apt/lists/*
 
 # 4. Baixar e instalar o ttyd (versão 1.7.3)
@@ -37,7 +38,7 @@ RUN ARCH=$(uname -m) && \
 
 # 5. Configurações: diretório de trabalho e atalho 'dev'
 RUN mkdir -p /opt/dev && \
-    echo '#!/bin/sh\ncd /opt/dev && gemini' > /usr/bin/dev && \
+    echo '#!/bin/sh\ncd /opt/dev && antigravity' > /usr/bin/dev && \
     chmod +x /usr/bin/dev
 
 # Script de entrada para configurar o git via variáveis de ambiente
