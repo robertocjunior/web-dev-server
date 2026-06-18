@@ -1,8 +1,8 @@
 #!/bin/sh
 
-# Tenta atualizar o gemini-cli no início
-echo "Verificando atualizações para @google/gemini-cli..."
-npm install -g @google/gemini-cli@latest --no-audit --no-fund || echo "Aviso: Não foi possível atualizar o gemini-cli (verifique a conexão)."
+# Tenta atualizar o antigravity-cli no início
+echo "Verificando atualizações para antigravity-cli..."
+curl -fsSL https://antigravity.google/cli/install.sh | bash || echo "Aviso: Não foi possível atualizar o antigravity-cli (verifique a conexão)."
 
 # Configura o Git com base nas variáveis de ambiente, se fornecidas
 if [ -n "$GIT_USER_NAME" ]; then
