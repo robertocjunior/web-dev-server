@@ -1,14 +1,11 @@
 #!/bin/sh
 
-# Tenta atualizar o antigravity-cli no início
+# Garante o PATH correto caso o terminal chame scripts externos
+export PATH="/root/.antigravity/bin:${PATH}"
+
+# Tenta atualizar o antigravity-cli no início de forma silenciosa
 echo "Verificando atualizações para antigravity-cli..."
-if curl -fsSL https://antigravity.google/cli/install.sh | bash; then
-    if [ -f "/root/.antigravity/bin/antigravity" ]; then
-        mv /root/.antigravity/bin/antigravity /usr/local/bin/antigravity
-    fi
-else
-    echo "Aviso: Não foi possível atualizar o antigravity-cli (verifique a conexão)."
-fi
+curl -fsSL https://antigravity.google/cli/install.sh | bash -s -- -y || echo "Aviso: Não foi possível atualizar o antigravity-cli (verifique a conexão)."
 
 # Configura o Git com base nas variáveis de ambiente, se fornecidas
 if [ -n "$GIT_USER_NAME" ]; then
