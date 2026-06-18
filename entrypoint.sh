@@ -2,7 +2,13 @@
 
 # Tenta atualizar o antigravity-cli no início
 echo "Verificando atualizações para antigravity-cli..."
-curl -fsSL https://antigravity.google/cli/install.sh | bash || echo "Aviso: Não foi possível atualizar o antigravity-cli (verifique a conexão)."
+if curl -fsSL https://antigravity.google/cli/install.sh | bash; then
+    if [ -f "/root/.antigravity/bin/antigravity" ]; then
+        mv /root/.antigravity/bin/antigravity /usr/local/bin/antigravity
+    fi
+else
+    echo "Aviso: Não foi possível atualizar o antigravity-cli (verifique a conexão)."
+fi
 
 # Configura o Git com base nas variáveis de ambiente, se fornecidas
 if [ -n "$GIT_USER_NAME" ]; then
