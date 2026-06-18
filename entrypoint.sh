@@ -31,4 +31,4 @@ export HISTFILE=/opt/dev/.bash_history
 touch "$HISTFILE"
 
 # Inicia o ttyd com os parâmetros solicitados
-exec /usr/local/bin/ttyd -W -o bash
+exec /usr/local/bin/ttyd -W -o bash -c "tmux new-session -A -s dev_session"
