@@ -20,11 +20,12 @@ RUN mkdir -p /etc/apt/keyrings \
     gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg \
     && echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_20.x nodistro main" > /etc/apt/sources.list.d/nodesource.list
 
-# 3. Instalar Node.js e Antigravity CLI
+# 3. Instalar Node.js e Antigravity CLI de forma global
 RUN apt-get update && apt-get install -y --no-install-recommends \
     nodejs \
     && npm install -g npm@latest \
     && curl -fsSL https://antigravity.google/cli/install.sh | bash \
+    && mv /root/.antigravity/bin/antigravity /usr/local/bin/antigravity \
     && rm -rf /var/lib/apt/lists/*
 
 # 4. Baixar e instalar o ttyd (versão 1.7.3)
