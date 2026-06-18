@@ -2,6 +2,8 @@ FROM debian:stable-slim
 
 # Evitar prompts interativos durante o build
 ENV DEBIAN_FRONTEND=noninteractive
+# Adiciona o diretório padrão do Antigravity direto no PATH do sistema
+ENV PATH="/root/.antigravity/bin:${PATH}"
 
 # 1. Instalar dependências básicas e ferramentas iniciais
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -20,12 +22,12 @@ RUN mkdir -p /etc/apt/keyrings \
     gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg \
     && echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_20.x nodistro main" > /etc/apt/sources.list.d/nodesource.list
 
-# 3. Instalar Node.js e Antigravity CLI de forma global
+# 3. Instalar Node.js e Antigravity CLI
 RUN apt-get update && apt-get install -y --no-install-recommends \
     nodejs \
     && npm install -g npm@latest \
-    && curl -fsSL https://antigravity.google/cli/install.sh | bash \
-    && mv /root/.antigravity/bin/antigravity /usr/local/bin/antigravity \
+    && mkdir -p /root/.antigravity/bin \
+    && curl -fsSL https://antigravity.google/cli/install.sh | bash -s -- -y \
     && rm -rf /var/lib/apt/lists/*
 
 # 4. Baixar e instalar o ttyd (versão 1.7.3)
