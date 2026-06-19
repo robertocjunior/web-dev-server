@@ -3,6 +3,9 @@
 # Garante o PATH correto caso o terminal chame scripts externos
 export PATH="/root/.local/bin:${PATH}"
 
+# Garante a existência dos diretórios de persistência dentro do workdir
+mkdir -p /root/.config /root/.local /opt/dev
+
 # Tenta atualizar o antigravity-cli no início de forma silenciosa
 echo "Verificando atualizações para antigravity-cli..."
 curl -fsSL https://antigravity.google/cli/install.sh | bash || echo "Aviso: Não foi possível atualizar o antigravity-cli (verifique a conexão)."
@@ -26,9 +29,9 @@ if [ -n "$GITHUB_REPO" ]; then
     fi
 fi
 
-# Configura persistência do histórico do terminal se o volume for montado em /opt/dev
+# Configura persistência do histórico do terminal dentro da pasta workdir
 export HISTFILE=/opt/dev/.bash_history
 touch "$HISTFILE"
 
-# Inicia o ttyd com os parâmetros solicitados
+# Inicia o ttyd permitindo multiplas conexões consecutivas acopladas ao tmux
 exec /usr/local/bin/ttyd -W bash -c "tmux new-session -A -s dev_session"
