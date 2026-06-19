@@ -33,5 +33,5 @@ fi
 export HISTFILE=/opt/dev/.bash_history
 touch "$HISTFILE"
 
-# Inicia o ttyd permitindo multiplas conexões consecutivas acopladas ao tmux
-exec /usr/local/bin/ttyd -W bash -c "tmux new-session -A -s dev_session"
+# Inicia o ttyd rodando o bash diretamente (sem tmux) e sem o parâmetro -o
+exec /usr/local/bin/ttyd -W bash
