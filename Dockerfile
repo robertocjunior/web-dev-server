@@ -38,10 +38,11 @@ RUN ARCH=$(uname -m) && \
     chmod +x ttyd.${TTYD_ARCH} && \
     mv ttyd.${TTYD_ARCH} /usr/local/bin/ttyd
 
-# 5. Configurações: diretório de trabalho e atalho 'dev'
+# 5. Configurações: diretório de trabalho, atalho 'dev' e PATH global para o terminal interativo
 RUN mkdir -p /opt/dev && \
-    echo '#!/bin/sh\ncd /opt/dev && agy' > /usr/bin/dev && \
-    chmod +x /usr/bin/dev
+    echo '#!/bin/sh\ncd /opt/dev && /root/.local/bin/agy' > /usr/bin/dev && \
+    chmod +x /usr/bin/dev && \
+    echo 'export PATH="/root/.local/bin:${PATH}"' >> /etc/bash.bashrc
 
 # Script de entrada para configurar o git via variáveis de ambiente
 COPY entrypoint.sh /entrypoint.sh
