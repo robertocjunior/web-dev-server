@@ -6,8 +6,8 @@ services:
     ports:
       - "7681:7681"
     environment:
-      - GIT_USER_NAME=roberto
-      - GIT_USER_EMAIL=robertocasalijunior@gmail.com
+      - GIT_USER_NAME=
+      - GIT_USER_EMAIL=
       - GITHUB_REPO=
     volumes:
       - ./workdir/opt/dev:/opt/dev
