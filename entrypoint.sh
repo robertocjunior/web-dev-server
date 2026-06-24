@@ -6,9 +6,15 @@ export PATH="/root/.local/bin:${PATH}"
 # Garante a existência dos diretórios de persistência dentro do workdir
 mkdir -p /root/.config /root/.local /opt/dev
 
-# Tenta atualizar o antigravity-cli no início de forma silenciosa
-echo "Verificando atualizações para antigravity-cli..."
-curl -fsSL https://antigravity.google/cli/install.sh | bash || echo "Aviso: Não foi possível atualizar o antigravity-cli (verifique a conexão)."
+# Se o volume ocultou o agy, força a instalação/restauração dele
+if [ ! -f "/root/.local/bin/agy" ]; then
+    echo "Instalando Antigravity CLI no volume persistente..."
+    curl -fsSL https://antigravity.google/cli/install.sh | bash
+else
+    # Tenta atualizar o antigravity-cli no início de forma silenciosa
+    echo "Verificando atualizações para antigravity-cli..."
+    curl -fsSL https://antigravity.google/cli/install.sh | bash || echo "Aviso: Não foi possível atualizar o antigravity-cli."
+fi
 
 # Configura o Git com base nas variáveis de ambiente, se fornecidas
 if [ -n "$GIT_USER_NAME" ]; then
