@@ -33,5 +33,5 @@ fi
 export HISTFILE=/opt/dev/.bash_history
 touch "$HISTFILE"
 
-# Inicia o ttyd rodando o bash diretamente (sem tmux) e sem o parâmetro -o
-exec /usr/local/bin/ttyd -w bash
+# Inicia o ttyd rodando o bash diretamente (sem tmux) e com permissão de escrita (-W)
+exec /usr/local/bin/ttyd -W bash
