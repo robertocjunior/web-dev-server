@@ -19,19 +19,18 @@ if [ -n "$GIT_USER_EMAIL" ]; then
     git config --global user.email "$GIT_USER_EMAIL"
 fi
 
-# Clona o repositório se GITHUB_REPO estiver definido e o diretório /opt/dev estiver vazio
+# Clona o repositório se GITHUB_REPO estiver definido
 if [ -n "$GITHUB_REPO" ]; then
-    if [ -z "$(ls -A /opt/dev)" ]; then
-        echo "Clonando repositório: $GITHUB_REPO..."
-        git clone "$GITHUB_REPO" /opt/dev
-    else
-        echo "/opt/dev não está vazio. Pulando clonagem."
-    fi
+    echo "Limpando o diretório /opt/dev para garantir uma clonagem limpa..."
+    rm -rf /opt/dev/* /opt/dev/.* 2>/dev/null
+    
+    echo "Clonando repositório: $GITHUB_REPO..."
+    git clone "$GITHUB_REPO" /opt/dev
 fi
 
 # Configura persistência do histórico do terminal dentro da pasta workdir
 export HISTFILE=/opt/dev/.bash_history
 touch "$HISTFILE"
 
-# Inicia o ttyd rodando o bash diretamente (sem tmux) e com permissão de escrita (-W)
-exec /usr/local/bin/ttyd -W bash
+# Inicia o ttyd rodando o bash diretamente (sem tmux)
+exec /usr/local/bin/ttyd bash
